@@ -10,16 +10,28 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "flat",
-      "aliases": ["Flat", "flat"],
-      "extensions": [".fl"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "flat",
-      "scopeName": "source.flat",
-      "path": "./syntaxes/flat.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "flat",
+        "aliases": [
+          "Flat",
+          "flat"
+        ],
+        "extensions": [
+          ".fl"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "flat",
+        "scopeName": "source.flat",
+        "path": "./syntaxes/flat.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
   }
 }

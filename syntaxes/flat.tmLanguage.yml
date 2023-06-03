@@ -1,0 +1,32 @@
+$schema: "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json"
+name: flat
+patterns:
+  - include: "#constructs"
+repository:
+  constructs:
+    patterns:
+      - name: meta.declaration.module.flat
+        match: (module)\s+((?:[a-zA-Z_][a-zA-Z0-9_]*)(?:\.(?:[a-zA-Z_][a-zA-Z0-9_]*))*)
+        captures:
+          1: 
+            name: storage.type.module.flat
+          2:
+            name: entity.name.module.flat
+
+      - name: meta.declaration.constraint.flat
+        begin: (constraint)\s+([a-zA-Z_][a-zA-Z0-9_]*)(?:<((?:\s*[a-zA-Z_][a-zA-Z0-9_]*)(?:\s*,\s*[a-zA-Z_][a-zA-Z0-9_]*)*)?>)?\s*\{
+        beginCaptures:
+          1:
+            name: storage.type.constraint.flat
+          2:
+            name: entity.name.constraint.flat
+          3:
+            patterns:
+              - name: entity.name.type.flat
+                match: ([a-zA-Z_][a-zA-Z0-9_]*)
+        end: \}
+
+      - name: meta.declaration.function.flat
+        match: \b(fn) (?:<>)
+
+scopeName: source.flat
