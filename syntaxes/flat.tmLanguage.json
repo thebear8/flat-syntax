@@ -1,52 +1,70 @@
 {
-  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "flat",
   "patterns": [
     {
-      "include": "#constructs"
+      "include": "#module_declaration"
+    },
+    {
+      "include": "#struct_declaration"
+    },
+    {
+      "include": "#constraint_declaration"
     }
   ],
   "repository": {
-    "constructs": {
-      "patterns": [
-        {
-          "name": "meta.declaration.module.flat",
-          "match": "(module)\\s+((?:[a-zA-Z_][a-zA-Z0-9_]*)(?:\\.(?:[a-zA-Z_][a-zA-Z0-9_]*))*)",
-          "captures": {
-            "1": {
-              "name": "storage.type.module.flat"
-            },
-            "2": {
-              "name": "entity.name.module.flat"
-            }
-          }
+    "module_declaration": {
+      "name": "meta.declaration.module.flat",
+      "match": "(?:(module)\\s*([a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*))",
+      "captures": {
+        "1": {
+          "name": "storage.type.module.flat"
         },
-        {
-          "name": "meta.declaration.constraint.flat",
-          "begin": "(constraint)\\s+([a-zA-Z_][a-zA-Z0-9_]*)(?:<((?:\\s*[a-zA-Z_][a-zA-Z0-9_]*)(?:\\s*,\\s*[a-zA-Z_][a-zA-Z0-9_]*)*)?>)?\\s*\\{",
-          "beginCaptures": {
-            "1": {
-              "name": "storage.type.constraint.flat"
-            },
-            "2": {
-              "name": "entity.name.constraint.flat"
-            },
-            "3": {
-              "patterns": [
-                {
-                  "name": "entity.name.type.flat",
-                  "match": "([a-zA-Z_][a-zA-Z0-9_]*)"
-                }
-              ]
-            }
-          },
-          "end": "\\}"
-        },
-        {
-          "name": "meta.declaration.function.flat",
-          "match": "\\b(fn) (?:<>)"
+        "2": {
+          "name": "entity.name.module.flat"
         }
-      ]
+      }
+    },
+    "struct_declaration": {
+      "name": "meta.declaration.struct.flat",
+      "begin": "(?:(struct)\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*((?:<\\s*(?:\\s*[a-zA-Z_][a-zA-Z0-9_]*(?:\\s*,\\s*[a-zA-Z_][a-zA-Z0-9_]*)*)?\\s*>))?\\s*{)",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.struct.flat"
+        },
+        "2": {
+          "name": "entity.name.struct.flat"
+        },
+        "3": {
+          "patterns": [
+            {
+              "name": "entity.name.type.flat",
+              "match": "([a-zA-Z_][a-zA-Z0-9_]*)"
+            }
+          ]
+        }
+      },
+      "end": "}"
+    },
+    "constraint_declaration": {
+      "name": "meta.declaration.constraint.flat",
+      "begin": "(?:(constraint)\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*((?:<\\s*(?:\\s*[a-zA-Z_][a-zA-Z0-9_]*(?:\\s*,\\s*[a-zA-Z_][a-zA-Z0-9_]*)*)?\\s*>))?\\s*{)",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.constraint.flat"
+        },
+        "2": {
+          "name": "entity.name.constraint.flat"
+        },
+        "3": {
+          "patterns": [
+            {
+              "name": "entity.name.type.flat",
+              "match": "([a-zA-Z_][a-zA-Z0-9_]*)"
+            }
+          ]
+        }
+      },
+      "end": "}"
     }
   },
   "scopeName": "source.flat"

@@ -3,6 +3,9 @@
   "displayName": "flat-syntax",
   "description": "Syntax highlighting for flat",
   "version": "0.0.1",
+  "scripts": {
+    "build": "ts-node generator/main.ts > syntaxes/flat.tmLanguage.json"
+  },
   "engines": {
     "vscode": "^1.78.0"
   },
@@ -32,6 +35,7 @@
     ]
   },
   "devDependencies": {
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "ts-node": "^10.9.1"
   }
 }
