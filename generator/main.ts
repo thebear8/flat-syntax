@@ -169,7 +169,7 @@ const syntax: TmLanguage = {
         },
       ],
 
-      end: All("}"),
+      end: Lookbehind("}"),
     },
 
     type: {
@@ -188,7 +188,7 @@ const syntax: TmLanguage = {
           match: AtleastOnce(Any("*", "[]")),
         },
       ],
-      end: NegativeLookahead("<", "*", "[]"),
+      end: NegativeLookahead(WS, Any("<", "*", "[]")),
     },
 
     statement: {
@@ -227,7 +227,7 @@ const syntax: TmLanguage = {
           end: NegativeLookbehind(Identifier, WS, "="),
         },
       ],
-      end: NegativeLookahead(Identifier, WS, "="),
+      end: NegativeLookahead(WS, Identifier, WS, "="),
     },
 
     return_statement: {
@@ -368,7 +368,7 @@ const syntax: TmLanguage = {
               end: All("}"),
             },
           ],
-          end: NegativeLookahead(Any("<", "{")),
+          end: NegativeLookahead(WS, Any("<", "{")),
         },
       ],
     },
@@ -449,7 +449,7 @@ const syntax: TmLanguage = {
           begin: All("~"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
           patterns: [{ include: "#L2" }],
-          end: NegativeLookahead("~"),
+          end: NegativeLookahead(WS, "~"),
         },
         {
           include: "#L1",
