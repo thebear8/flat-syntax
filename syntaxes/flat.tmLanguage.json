@@ -79,7 +79,7 @@
           "name": "storage.type.constraint.flat"
         },
         "2": {
-          "name": "entity.name.constraint.flat"
+          "name": "entity.name.type.constraint.flat"
         },
         "3": {
           "patterns": [
@@ -120,7 +120,7 @@
               "begin": "(?:((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))(?:(?:\\s*))(?:<))",
               "beginCaptures": {
                 "1": {
-                  "name": "entity.name.constraint.flat"
+                  "name": "entity.name.type.constraint.flat"
                 }
               },
               "patterns": [

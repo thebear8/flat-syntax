@@ -104,7 +104,7 @@ const syntax: TmLanguage = {
 
       beginCaptures: {
         1: { name: "storage.type.constraint.flat" },
-        2: { name: "entity.name.constraint.flat" },
+        2: { name: "entity.name.type.constraint.flat" },
         3: {
           patterns: [
             { name: "entity.name.type.flat", match: Capture(Identifier) },
@@ -141,7 +141,7 @@ const syntax: TmLanguage = {
             {
               begin: All(Capture(Identifier), WS, "<"),
               beginCaptures: {
-                1: { name: "entity.name.constraint.flat" },
+                1: { name: "entity.name.type.constraint.flat" },
               },
               patterns: [{ include: "#type" }, { match: All(",") }],
               end: All(">"),
