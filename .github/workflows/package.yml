@@ -1,0 +1,20 @@
+name: Build and Package
+
+on:
+  push:
+    branches: [main]
+  merge:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+  steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+    - run: npm run build
+    - run: npx vsce package --out flat-syntax.${{ github.sha }}.vsix
+    - uses: actions/upload-artifact@v3
+      with:
+        path: flat-syntax.${{ github.sha }}.vsix

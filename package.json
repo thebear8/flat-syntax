@@ -3,6 +3,9 @@
   "displayName": "flat-syntax",
   "description": "Syntax highlighting for flat",
   "version": "0.0.1",
+  "repository": { 
+    "url": "https://github.com/thebear8/flat-syntax"
+  },
   "scripts": {
     "build": "ts-node generator/main.ts > syntaxes/flat.tmLanguage.json"
   },
@@ -35,6 +38,7 @@
     ]
   },
   "devDependencies": {
+    "@vscode/vsce": "^2.19.0",
     "js-yaml": "^4.1.0",
     "ts-node": "^10.9.1"
   }
