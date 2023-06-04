@@ -16,4 +16,5 @@ jobs:
       - run: npx vsce package --out flat-syntax.${{ github.sha }}.vsix
       - uses: actions/upload-artifact@v3
         with:
+          name: VSIX Package
           path: flat-syntax.${{ github.sha }}.vsix
