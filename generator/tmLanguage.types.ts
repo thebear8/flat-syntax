@@ -1,3 +1,5 @@
+import { Fragment } from "./builder";
+
 export type TmLanguage = Grammar & {
   name?: string;
   scopeName: string;
@@ -24,22 +26,22 @@ export type Pattern = {
   comment?: string;
   disabled?: 0 | 1;
   include?: string;
-  match?: string;
+  match?: string | Fragment;
   name?: Name;
   captures?: Captures;
   patterns?: Pattern[];
 } & (
   | {
-      begin: string;
-      end: string;
+      begin: string | Fragment;
+      end: string | Fragment;
       contentName?: Name;
       beginCaptures?: Captures;
       endCaptures?: Captures;
       applyEndPatternsLast?: 0 | 1;
     }
   | {
-      begin: string;
-      while: string;
+      begin: string | Fragment;
+      while: string | Fragment;
       contentName?: Name;
       beginCaptures?: Captures;
       whileCaptures?: Captures;

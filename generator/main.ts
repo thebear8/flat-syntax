@@ -1,36 +1,5 @@
 import type { TmLanguage } from "./tmLanguage.types";
-
-type Fragment = string | RegExp | (() => string) | (() => RegExp);
-
-function Escape(v: Fragment): string {
-  if (typeof v === "string") return v;
-  else if (v instanceof RegExp) return v.source;
-  return Escape(v());
-}
-
-function All(...v: Fragment[]) {
-  if (v.length === 1) return Escape(v[0]);
-  else return `(?:${v.map(Escape).join("")})`;
-}
-
-function Capture(...v: Fragment[]) {
-  return `(${v.map(Escape).join("")})`;
-}
-
-function Any(...v: Fragment[]) {
-  if (v.length === 1) return Escape(v[0]);
-  return `(?:${v.map(Escape).join("|")})`;
-}
-
-function Optional(...v: Fragment[]) {
-  return `${All(...v)}?`;
-}
-function Repeat(...v: Fragment[]) {
-  return `${All(...v)}*`;
-}
-function AtleastOnce(...v: Fragment[]) {
-  return `${All(...v)}+`;
-}
+import { All, Any, AtleastOnce, Capture, Optional, Repeat } from "./builder";
 
 const WS = /\s*/;
 const Identifier = /[a-zA-Z_][a-zA-Z0-9_]*/;
@@ -137,24 +106,24 @@ const syntax: TmLanguage = {
               patterns: [{ include: "#type" }],
             },
           ],
-          end: All(">", WS, /(\*|\[\])*/),
+          end: All(">", WS, Repeat(Any("*", "[]"))),
           endCaptures: {
             1: {
               patterns: [
-                { name: "storage.type.modifier.flat", match: All(/\*/) },
-                { name: "storage.type.modifier.flat", match: All(/\[\]/) },
+                { name: "storage.type.modifier.flat", match: All("*") },
+                { name: "storage.type.modifier.flat", match: All("[]") },
               ],
             },
           },
         },
         {
           name: "meta.type.modifiers.flat",
-          match: All(/(\*|\[\])+/),
+          match: All(AtleastOnce(Any("*", "[]"))),
           captures: {
             1: {
               patterns: [
-                { name: "storage.type.modifier.flat", match: All(/\*/) },
-                { name: "storage.type.modifier.flat", match: All(/\[\]/) },
+                { name: "storage.type.modifier.flat", match: All("*") },
+                { name: "storage.type.modifier.flat", match: All("[]") },
               ],
             },
           },
