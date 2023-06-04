@@ -52,7 +52,6 @@ const syntax: TmLanguage = {
 
     struct_declaration: {
       name: "meta.declaration.struct.flat",
-
       begin: All(
         Capture("struct"),
         WS,
@@ -62,17 +61,31 @@ const syntax: TmLanguage = {
         WS,
         "{"
       ),
-
       beginCaptures: {
         1: { name: "storage.type.struct.flat" },
-        2: { name: "entity.name.struct.flat" },
+        2: { name: "entity.name.type.struct.flat" },
         3: {
           patterns: [
             { name: "entity.name.type.flat", match: Capture(Identifier) },
           ],
         },
       },
-
+      patterns: [
+        {
+          begin: Identifier,
+          beginCaptures: {
+            0: { name: "variable.other.flat" },
+          },
+          patterns: [
+            {
+              begin: All(":"),
+              patterns: [{ include: "#type" }],
+              end: Lookahead(Any(",", "}")),
+            },
+          ],
+          end: Lookahead(Any(",", "}")),
+        },
+      ],
       end: All("}"),
     },
 

@@ -36,7 +36,7 @@
           "name": "storage.type.struct.flat"
         },
         "2": {
-          "name": "entity.name.struct.flat"
+          "name": "entity.name.type.struct.flat"
         },
         "3": {
           "patterns": [
@@ -47,6 +47,28 @@
           ]
         }
       },
+      "patterns": [
+        {
+          "begin": "(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))",
+          "beginCaptures": {
+            "0": {
+              "name": "variable.other.flat"
+            }
+          },
+          "patterns": [
+            {
+              "begin": "(?:(?::))",
+              "patterns": [
+                {
+                  "include": "#type"
+                }
+              ],
+              "end": "(?=(?:(?:(?:,)|(?:\\}))))"
+            }
+          ],
+          "end": "(?=(?:(?:(?:,)|(?:\\}))))"
+        }
+      ],
       "end": "(?:(?:\\}))"
     },
     "constraint_declaration": {
