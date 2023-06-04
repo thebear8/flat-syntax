@@ -339,11 +339,13 @@ const syntax: TmLanguage = {
         },
         {
           name: "meta.expression.identifier.flat",
-          begin: Capture(Identifier),
-          beginCaptures: {
-            1: { name: "variable.other.flat" },
-          },
+          begin: Identifier,
           patterns: [
+            {
+              begin: All("<"),
+              patterns: [{ include: "#type" }],
+              end: All(">"),
+            },
             {
               begin: All("{"),
               patterns: [
@@ -366,7 +368,7 @@ const syntax: TmLanguage = {
               end: All("}"),
             },
           ],
-          end: NegativeLookahead("{"),
+          end: NegativeLookahead(Any("<", "{")),
         },
       ],
     },
