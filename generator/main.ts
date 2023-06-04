@@ -32,6 +32,7 @@ const syntax: TmLanguage = {
     { include: "#module_declaration" },
     { include: "#struct_declaration" },
     { include: "#constraint_declaration" },
+    { include: "#function_attribute" },
     { include: "#function_declaration" },
     { include: "#comment" },
   ],
@@ -221,9 +222,19 @@ const syntax: TmLanguage = {
       end: All("}"),
     },
 
+    function_attribute: {
+      name: "meta.declaration.function.attribute.flat",
+      patterns: [
+        {
+          name: "storage.modifier.flat",
+          match: All("@", Any("no_mangle", "extern")),
+        },
+      ],
+    },
+
     function_declaration: {
       name: "meta.declaration.function.flat",
-      begin: All(Capture("fn")),
+      begin: Capture("fn"),
       beginCaptures: {
         1: { name: "storage.type.function.flat" },
       },

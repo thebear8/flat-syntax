@@ -12,6 +12,9 @@
       "include": "#constraint_declaration"
     },
     {
+      "include": "#function_attribute"
+    },
+    {
       "include": "#function_declaration"
     },
     {
@@ -198,9 +201,18 @@
       ],
       "end": "(?:(?:\\}))"
     },
+    "function_attribute": {
+      "name": "meta.declaration.function.attribute.flat",
+      "patterns": [
+        {
+          "name": "storage.modifier.flat",
+          "match": "(?:(?:@)(?:(?:no_mangle)|(?:extern)))"
+        }
+      ]
+    },
     "function_declaration": {
       "name": "meta.declaration.function.flat",
-      "begin": "(?:((?:fn)))",
+      "begin": "((?:fn))",
       "beginCaptures": {
         "1": {
           "name": "storage.type.function.flat"
