@@ -114,6 +114,51 @@ const syntax = {
 
       end: "}",
     },
+
+    type: {
+      name: "meta.type.flat",
+
+      begin: All(Capture(Identifier), WS),
+      beginCaptures: {
+        1: { name: "entity.name.type.flat" },
+      },
+
+      patterns: [
+        {
+          name: "meta.type.generic.parameters.flat",
+          begin: "<",
+          patterns: [
+            { name: "meta.type.generic.parameter.flat", include: "#type" },
+            {
+              name: "meta.type.generic.parameter.flat",
+              begin: ",",
+              patterns: [{ include: "#type" }],
+            },
+          ],
+          end: All(">", WS, /(\*|\[\])*/),
+          endCaptures: {
+            1: {
+              patterns: [
+                { name: "storage.type.modifier.flat", match: All(/\*/) },
+                { name: "storage.type.modifier.flat", match: All(/\[\]/) },
+              ],
+            },
+          },
+        },
+        {
+          name: "meta.type.modifiers.flat",
+          match: All(/(\*|\[\])+/),
+          captures: {
+            1: {
+              patterns: [
+                { name: "storage.type.modifier.flat", match: All(/\*/) },
+                { name: "storage.type.modifier.flat", match: All(/\[\]/) },
+              ],
+            },
+          },
+        },
+      ],
+    },
   },
   scopeName: "source.flat",
 };
