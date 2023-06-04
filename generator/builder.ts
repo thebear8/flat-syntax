@@ -29,6 +29,22 @@ export function Any(...v: (string | RegExp | Fragment)[]) {
   return new Fragment(`(?:${v.map(Escape).join("|")})`);
 }
 
+export function Lookahead(...v: (string | RegExp | Fragment)[]) {
+  return new Fragment(`(?=${All(...v)})`);
+}
+
+export function NegativeLookahead(...v: (string | RegExp | Fragment)[]) {
+  return new Fragment(`(?!${All(...v)})`);
+}
+
+export function Lookbehind(...v: (string | RegExp | Fragment)[]) {
+  return new Fragment(`(?<=${All(...v)})`);
+}
+
+export function NegativeLookbehind(...v: (string | RegExp | Fragment)[]) {
+  return new Fragment(`(?<!${All(...v)})`);
+}
+
 export function Optional(...v: (string | RegExp | Fragment)[]) {
   return new Fragment(`(?:${All(...v)}?)`);
 }

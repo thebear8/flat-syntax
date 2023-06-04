@@ -1,6 +1,7 @@
 import { Fragment } from "./builder";
 
 export type TmLanguage = Grammar & {
+  $schema?: string;
   name?: string;
   scopeName: string;
   foldingStartMarker?: string;
@@ -26,22 +27,22 @@ export type Pattern = {
   comment?: string;
   disabled?: 0 | 1;
   include?: string;
-  match?: string | Fragment;
+  match?: Fragment;
   name?: Name;
   captures?: Captures;
   patterns?: Pattern[];
 } & (
   | {
-      begin: string | Fragment;
-      end: string | Fragment;
+      begin: Fragment;
+      end: Fragment;
       contentName?: Name;
       beginCaptures?: Captures;
       endCaptures?: Captures;
       applyEndPatternsLast?: 0 | 1;
     }
   | {
-      begin: string | Fragment;
-      while: string | Fragment;
+      begin: Fragment;
+      while: Fragment;
       contentName?: Name;
       beginCaptures?: Captures;
       whileCaptures?: Captures;
