@@ -38,20 +38,10 @@ const syntax: TmLanguage = {
   ],
   repository: {
     comment: {
-      patterns: [
-        {
-          include: "#line_comment",
-        },
-        {
-          include: "#block_comment",
-        },
-      ],
+      patterns: [{ include: "#line_comment" }, { include: "#block_comment" }],
     },
 
-    line_comment: {
-      name: "comment.line.flat",
-      match: All("//", /.*/),
-    },
+    line_comment: { name: "comment.line.flat", match: All("//", /.*/) },
 
     block_comment: {
       name: "comment.block.flat",
@@ -90,37 +80,26 @@ const syntax: TmLanguage = {
         2: { name: "entity.name.type.struct.flat" },
         3: {
           patterns: [
-            {
-              name: "entity.name.type.flat",
-              match: Capture(Identifier),
-            },
-            {
-              include: "#comment",
-            },
+            { name: "entity.name.type.flat", match: Capture(Identifier) },
+            { include: "#comment" },
           ],
         },
       },
       patterns: [
         {
           begin: Identifier,
-          beginCaptures: {
-            0: { name: "variable.other.flat" },
-          },
+          beginCaptures: { 0: { name: "variable.other.flat" } },
           patterns: [
             {
               begin: All(":"),
               patterns: [{ include: "#type" }],
               end: Lookahead(Any(",", "}")),
             },
-            {
-              include: "#comment",
-            },
+            { include: "#comment" },
           ],
           end: Lookahead(Any(",", "}")),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
       end: All("}"),
     },
@@ -141,13 +120,8 @@ const syntax: TmLanguage = {
         2: { name: "entity.name.type.constraint.flat" },
         3: {
           patterns: [
-            {
-              name: "entity.name.type.flat",
-              match: Capture(Identifier),
-            },
-            {
-              include: "#comment",
-            },
+            { name: "entity.name.type.flat", match: Capture(Identifier) },
+            { include: "#comment" },
           ],
         },
       },
@@ -155,9 +129,7 @@ const syntax: TmLanguage = {
         {
           name: "meta.declaration.constraint.condition.flat",
           begin: All("fn"),
-          beginCaptures: {
-            0: { name: "storage.type.function.flat" },
-          },
+          beginCaptures: { 0: { name: "storage.type.function.flat" } },
           patterns: [
             {
               name: "meta.declaration.constraint.condition.parameters.flat",
@@ -165,59 +137,32 @@ const syntax: TmLanguage = {
               patterns: [
                 {
                   begin: Identifier,
-                  beginCaptures: {
-                    0: { name: "variable.parameter.flat" },
-                  },
-                  patterns: [
-                    {
-                      include: "#type",
-                    },
-                    {
-                      include: "#comment",
-                    },
-                  ],
+                  beginCaptures: { 0: { name: "variable.parameter.flat" } },
+                  patterns: [{ include: "#type" }, { include: "#comment" }],
                   end: Lookahead(Any(",", ")")),
                 },
-                {
-                  include: "#comment",
-                },
+                { include: "#comment" },
               ],
               end: All(")"),
             },
             {
               name: "meta.declaration.constraint.condition.name.flat",
               patterns: [
-                {
-                  name: "entity.name.function.flat",
-                  match: Identifier,
-                },
-                {
-                  include: "#comment",
-                },
+                { name: "entity.name.function.flat", match: Identifier },
+                { include: "#comment" },
               ],
             },
             {
               name: "meta.declaration.constraint.condition.result.flat",
               begin: All(":"),
-              patterns: [
-                {
-                  include: "#type",
-                },
-                {
-                  include: "#comment",
-                },
-              ],
+              patterns: [{ include: "#type" }, { include: "#comment" }],
               end: Lookahead(Any(",", "}")),
             },
-            {
-              include: "#comment",
-            },
+            { include: "#comment" },
           ],
           end: Lookahead(Any(",", "}")),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
       end: All("}"),
     },
@@ -235,22 +180,15 @@ const syntax: TmLanguage = {
     function_declaration: {
       name: "meta.declaration.function.flat",
       begin: Capture("fn"),
-      beginCaptures: {
-        1: { name: "storage.type.function.flat" },
-      },
+      beginCaptures: { 1: { name: "storage.type.function.flat" } },
 
       patterns: [
         {
           name: "meta.declaration.function.typeparams.flat",
           begin: All("<"),
           patterns: [
-            {
-              name: "entity.name.type.flat",
-              match: Capture(Identifier),
-            },
-            {
-              include: "#comment",
-            },
+            { name: "entity.name.type.flat", match: Capture(Identifier) },
+            { include: "#comment" },
           ],
           end: All(">"),
         },
@@ -264,21 +202,13 @@ const syntax: TmLanguage = {
                 1: { name: "entity.name.type.constraint.flat" },
               },
               patterns: [
-                {
-                  include: "#type",
-                },
-                {
-                  match: All(","),
-                },
-                {
-                  include: "#comment",
-                },
+                { include: "#type" },
+                { match: All(",") },
+                { include: "#comment" },
               ],
               end: All(">"),
             },
-            {
-              include: "#comment",
-            },
+            { include: "#comment" },
           ],
           end: All("]"),
         },
@@ -288,61 +218,32 @@ const syntax: TmLanguage = {
           patterns: [
             {
               begin: All(Capture(Identifier)),
-              beginCaptures: {
-                1: { name: "variable.parameter.flat" },
-              },
+              beginCaptures: { 1: { name: "variable.parameter.flat" } },
               patterns: [
-                {
-                  match: All(":"),
-                },
-                {
-                  include: "#type",
-                },
-                {
-                  include: "#comment",
-                },
+                { match: All(":") },
+                { include: "#type" },
+                { include: "#comment" },
               ],
               end: Any(",", Lookahead(")")),
             },
-            {
-              include: "#comment",
-            },
+            { include: "#comment" },
           ],
           end: All(")"),
         },
         {
           name: "meta.declaration.function.body.flat",
           begin: Lookahead("{"),
-          patterns: [
-            {
-              include: "#block_statement",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#block_statement" }, { include: "#comment" }],
           end: Lookbehind("}"),
         },
-        {
-          name: "entity.name.function.flat",
-          match: Identifier,
-        },
+        { name: "entity.name.function.flat", match: Identifier },
         {
           name: "meta.declaration.function.result.flat",
           begin: All(":"),
-          patterns: [
-            {
-              include: "#type",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#type" }, { include: "#comment" }],
           end: Lookahead("{"),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
 
       end: Lookbehind("}"),
@@ -351,98 +252,54 @@ const syntax: TmLanguage = {
     type: {
       name: "meta.type.flat",
       begin: Capture(Identifier),
-      beginCaptures: {
-        1: { name: "entity.name.type.flat" },
-      },
+      beginCaptures: { 1: { name: "entity.name.type.flat" } },
       patterns: [
         {
           begin: All("<"),
           patterns: [
-            {
-              include: "#type",
-            },
-            {
-              match: All(","),
-            },
-            {
-              include: "#comment",
-            },
+            { include: "#type" },
+            { match: All(",") },
+            { include: "#comment" },
           ],
           end: All(">"),
         },
-        {
-          match: AtleastOnce(Any("*", "[]")),
-        },
-        {
-          include: "#comment",
-        },
+        { match: AtleastOnce(Any("*", "[]")) },
+        { include: "#comment" },
       ],
       end: NegativeLookahead(WS, Any("<", "*", "[]")),
     },
 
     statement: {
       patterns: [
-        {
-          include: "#block_statement",
-        },
-        {
-          include: "#variable_statement",
-        },
-        {
-          include: "#return_statement",
-        },
-        {
-          include: "#if_statement",
-        },
-        {
-          include: "#while_statement",
-        },
-        {
-          include: "#expression_statement",
-        },
-        {
-          include: "#comment",
-        },
+        { include: "#block_statement" },
+        { include: "#variable_statement" },
+        { include: "#return_statement" },
+        { include: "#if_statement" },
+        { include: "#while_statement" },
+        { include: "#expression_statement" },
+        { include: "#comment" },
       ],
     },
 
     block_statement: {
       name: "meta.statement.block.flat",
       begin: All("{"),
-      patterns: [
-        {
-          include: "#statement",
-        },
-        {
-          include: "#comment",
-        },
-      ],
+      patterns: [{ include: "#statement" }, { include: "#comment" }],
       end: All("}"),
     },
 
     variable_statement: {
       name: "meta.statement.variable.flat",
       begin: All("let"),
-      beginCaptures: {
-        0: { name: "storage.type.let.flat" },
-      },
+      beginCaptures: { 0: { name: "storage.type.let.flat" } },
       patterns: [
         {
           begin: All(Capture(Identifier), WS, "="),
           beginCaptures: { 1: { name: "variable.other.flat" } },
-          patterns: [
-            {
-              include: "#expression",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#expression" }, { include: "#comment" }],
           end: NegativeLookbehind(Identifier, WS, "="),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
       end: NegativeLookahead(WS, Identifier, WS, "="),
     },
@@ -450,57 +307,28 @@ const syntax: TmLanguage = {
     return_statement: {
       name: "meta.statement.return.flat",
       begin: All("return"),
-      beginCaptures: {
-        0: { name: "keyword.control.return.flat" },
-      },
-      patterns: [
-        {
-          include: "#expression",
-        },
-        {
-          include: "#comment",
-        },
-      ],
+      beginCaptures: { 0: { name: "keyword.control.return.flat" } },
+      patterns: [{ include: "#expression" }, { include: "#comment" }],
       end: NegativeLookbehind("return"),
     },
 
     if_statement: {
       name: "meta.statement.if.flat",
       begin: All("if"),
-      beginCaptures: {
-        0: { name: "keyword.control.if.flat" },
-      },
+      beginCaptures: { 0: { name: "keyword.control.if.flat" } },
       patterns: [
         {
           begin: All("("),
-          patterns: [
-            {
-              include: "#expression",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#expression" }, { include: "#comment" }],
           end: All(")"),
         },
         {
           begin: All("else"),
-          patterns: [
-            {
-              include: "#statement",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#statement" }, { include: "#comment" }],
           end: NegativeLookbehind("else"),
         },
-        {
-          include: "#statement",
-        },
-        {
-          include: "#comment",
-        },
+        { include: "#statement" },
+        { include: "#comment" },
       ],
       end: All(
         NegativeLookbehind(Any("if", ")")),
@@ -511,53 +339,24 @@ const syntax: TmLanguage = {
     while_statement: {
       name: "meta.statement.while.flat",
       begin: All("while"),
-      beginCaptures: {
-        0: { name: "keyword.control.while.flat" },
-      },
+      beginCaptures: { 0: { name: "keyword.control.while.flat" } },
       patterns: [
         {
           begin: All("("),
-          patterns: [
-            {
-              include: "#expression",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#expression" }, { include: "#comment" }],
           end: All(")"),
         },
-        {
-          include: "#statement",
-        },
-        {
-          include: "#comment",
-        },
+        { include: "#statement" },
+        { include: "#comment" },
       ],
       end: All(NegativeLookbehind(Any("while", ")"))),
     },
 
     expression_statement: {
-      patterns: [
-        {
-          include: "#expression",
-        },
-        {
-          include: "#comment",
-        },
-      ],
+      patterns: [{ include: "#expression" }, { include: "#comment" }],
     },
 
-    expression: {
-      patterns: [
-        {
-          include: "#L10",
-        },
-        {
-          include: "#comment",
-        },
-      ],
-    },
+    expression: { patterns: [{ include: "#L10" }, { include: "#comment" }] },
 
     L0: {
       name: "meta.expression.L0.flat",
@@ -565,14 +364,7 @@ const syntax: TmLanguage = {
         {
           name: "meta.expression.group.flat",
           begin: All("("),
-          patterns: [
-            {
-              include: "#expression",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#expression" }, { include: "#comment" }],
           end: All(")"),
         },
         {
@@ -599,9 +391,7 @@ const syntax: TmLanguage = {
         {
           name: "meta.expression.bool.flat",
           match: Capture(Any("true", "false")),
-          captures: {
-            1: { name: "constant.language.flat" },
-          },
+          captures: { 1: { name: "constant.language.flat" } },
         },
         {
           name: "string.quoted.single.flat",
@@ -619,14 +409,7 @@ const syntax: TmLanguage = {
           patterns: [
             {
               begin: All("<"),
-              patterns: [
-                {
-                  include: "#type",
-                },
-                {
-                  include: "#comment",
-                },
-              ],
+              patterns: [{ include: "#type" }, { include: "#comment" }],
               end: All(">"),
             },
             {
@@ -635,43 +418,29 @@ const syntax: TmLanguage = {
                 {
                   name: "meta.expression.struct.flat",
                   begin: Capture(Identifier),
-                  beginCaptures: {
-                    1: { name: "variable.other.flat" },
-                  },
+                  beginCaptures: { 1: { name: "variable.other.flat" } },
                   patterns: [
                     {
                       begin: All(":"),
                       patterns: [
-                        {
-                          include: "#expression",
-                        },
-                        {
-                          include: "#comment",
-                        },
+                        { include: "#expression" },
+                        { include: "#comment" },
                       ],
                       end: Lookahead(Any(",", "}")),
                     },
-                    {
-                      include: "#comment",
-                    },
+                    { include: "#comment" },
                   ],
                   end: Lookahead(Any(",", "}")),
                 },
-                {
-                  include: "#comment",
-                },
+                { include: "#comment" },
               ],
               end: All("}"),
             },
-            {
-              include: "#comment",
-            },
+            { include: "#comment" },
           ],
           end: NegativeLookahead(WS, Any("<", "{")),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
     },
 
@@ -679,23 +448,15 @@ const syntax: TmLanguage = {
       name: "meta.expression.L1.flat",
 
       patterns: [
-        {
-          include: "#L0",
-        },
+        { include: "#L0" },
         {
           name: "meta.expression.call.flat",
           begin: All("("),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
           patterns: [
-            {
-              include: "#expression",
-            },
-            {
-              match: All(","),
-            },
-            {
-              include: "#comment",
-            },
+            { include: "#expression" },
+            { match: All(",") },
+            { include: "#comment" },
           ],
           end: All(")"),
           endCaptures: { 0: { name: "keyword.operator.flat" } },
@@ -705,15 +466,9 @@ const syntax: TmLanguage = {
           begin: All("["),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
           patterns: [
-            {
-              include: "#expression",
-            },
-            {
-              match: All(","),
-            },
-            {
-              include: "#comment",
-            },
+            { include: "#expression" },
+            { match: All(",") },
+            { include: "#comment" },
           ],
           end: All("]"),
           endCaptures: { 0: { name: "keyword.operator.flat" } },
@@ -723,19 +478,12 @@ const syntax: TmLanguage = {
           begin: All("."),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
           patterns: [
-            {
-              name: "variable.other.flat",
-              match: Identifier,
-            },
-            {
-              include: "#comment",
-            },
+            { name: "variable.other.flat", match: Identifier },
+            { include: "#comment" },
           ],
           end: NegativeLookbehind("."),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
     },
 
@@ -746,426 +494,229 @@ const syntax: TmLanguage = {
           name: "meta.expression.pos.flat",
           begin: All("+"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L2",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L2" }, { include: "#comment" }],
           end: NegativeLookbehind("+"),
         },
         {
           name: "meta.expression.neg.flat",
           begin: All("-"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L2",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L2" }, { include: "#comment" }],
           end: NegativeLookbehind("-"),
         },
         {
           name: "meta.expression.lnot.flat",
           begin: All("!"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L2",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L2" }, { include: "#comment" }],
           end: NegativeLookbehind("!"),
         },
         {
           name: "meta.expression.bnot.flat",
           begin: All("~"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L2",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L2" }, { include: "#comment" }],
           end: NegativeLookahead(WS, "~"),
         },
-        {
-          include: "#L1",
-        },
-        {
-          include: "#comment",
-        },
+        { include: "#L1" },
+        { include: "#comment" },
       ],
     },
 
     L3: {
       name: "meta.expression.L3.flat",
       patterns: [
-        {
-          include: "#L2",
-        },
+        { include: "#L2" },
         {
           name: "meta.expression.mul.flat",
           begin: All("*"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L2",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L2" }, { include: "#comment" }],
           end: NegativeLookbehind("*"),
         },
         {
           name: "meta.expression.div.flat",
           begin: All("/"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L2",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L2" }, { include: "#comment" }],
           end: NegativeLookbehind("/"),
         },
         {
           name: "meta.expression.mod.flat",
           begin: All("%"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L2",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L2" }, { include: "#comment" }],
           end: NegativeLookbehind("%"),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
     },
 
     L4: {
       name: "meta.expression.L4.flat",
       patterns: [
-        {
-          include: "#L3",
-        },
+        { include: "#L3" },
         {
           name: "meta.expression.add.flat",
           begin: All("+"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L3",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L3" }, { include: "#comment" }],
           end: NegativeLookbehind("+"),
         },
         {
           name: "meta.expression.sub.flat",
           begin: All("-"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L3",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L3" }, { include: "#comment" }],
           end: NegativeLookbehind("-"),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
     },
 
     L5: {
       name: "meta.expression.L5.flat",
       patterns: [
-        {
-          include: "#L4",
-        },
+        { include: "#L4" },
         {
           name: "meta.expression.shl.flat",
           begin: All("<<"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L4",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L4" }, { include: "#comment" }],
           end: NegativeLookbehind("<<"),
         },
         {
           name: "meta.expression.shr.flat",
           begin: All(">>"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L4",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L4" }, { include: "#comment" }],
           end: NegativeLookbehind(">>"),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
     },
 
     L6: {
       name: "meta.expression.L6.flat",
       patterns: [
-        {
-          include: "#L5",
-        },
+        { include: "#L5" },
         {
           name: "meta.expression.band.flat",
           begin: All("&", NegativeLookahead("&&")),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L5",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L5" }, { include: "#comment" }],
           end: NegativeLookbehind("&"),
         },
         {
           name: "meta.expression.bor.flat",
           begin: All("|", NegativeLookahead("||")),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L5",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L5" }, { include: "#comment" }],
           end: NegativeLookbehind("|"),
         },
         {
           name: "meta.expression.bxor.flat",
           begin: All("^"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L5",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L5" }, { include: "#comment" }],
           end: NegativeLookbehind("^"),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
     },
 
     L7: {
       name: "meta.expression.L7.flat",
       patterns: [
-        {
-          include: "#L6",
-        },
+        { include: "#L6" },
         {
           name: "meta.expression.eq.flat",
           begin: All("=="),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L6",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L6" }, { include: "#comment" }],
           end: NegativeLookbehind("=="),
         },
         {
           name: "meta.expression.neq.flat",
           begin: All("!="),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L6",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L6" }, { include: "#comment" }],
           end: NegativeLookbehind("!="),
         },
         {
           name: "meta.expression.lt.flat",
           begin: All("<", NegativeLookahead("<<")),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L6",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L6" }, { include: "#comment" }],
           end: NegativeLookbehind("<"),
         },
         {
           name: "meta.expression.gt.flat",
           begin: All(">", NegativeLookahead(">>")),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L6",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L6" }, { include: "#comment" }],
           end: NegativeLookbehind(">"),
         },
         {
           name: "meta.expression.lteq.flat",
           begin: All("<="),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L6",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L6" }, { include: "#comment" }],
           end: NegativeLookbehind("<="),
         },
         {
           name: "meta.expression.gteq.flat",
           begin: All(">="),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L6",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L6" }, { include: "#comment" }],
           end: NegativeLookbehind(">="),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
     },
 
     L8: {
       name: "meta.expression.L8.flat",
       patterns: [
-        {
-          include: "#L7",
-        },
+        { include: "#L7" },
         {
           name: "meta.expression.land.flat",
           begin: All("&&"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L7",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L7" }, { include: "#comment" }],
           end: NegativeLookbehind("&&"),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
     },
 
     L9: {
       name: "meta.expression.L9.flat",
       patterns: [
-        {
-          include: "#L8",
-        },
+        { include: "#L8" },
         {
           name: "meta.expression.lor",
           begin: All("||"),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L8",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L8" }, { include: "#comment" }],
           end: NegativeLookbehind("||"),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
     },
 
     L10: {
       name: "meta.expression.L10.flat",
       patterns: [
-        {
-          include: "#L9",
-        },
+        { include: "#L9" },
         {
           name: "meta.expression.assign.flat",
           begin: All("=", NegativeLookahead("==")),
           beginCaptures: { 0: { name: "keyword.operator.flat" } },
-          patterns: [
-            {
-              include: "#L10",
-            },
-            {
-              include: "#comment",
-            },
-          ],
+          patterns: [{ include: "#L10" }, { include: "#comment" }],
           end: NegativeLookbehind("="),
         },
-        {
-          include: "#comment",
-        },
+        { include: "#comment" },
       ],
     },
   },
