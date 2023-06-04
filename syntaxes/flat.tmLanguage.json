@@ -13,12 +13,34 @@
     },
     {
       "include": "#function_declaration"
+    },
+    {
+      "include": "#comment"
     }
   ],
   "repository": {
+    "comment": {
+      "patterns": [
+        {
+          "include": "#line_comment"
+        },
+        {
+          "include": "#block_comment"
+        }
+      ]
+    },
+    "line_comment": {
+      "name": "comment.line.flat",
+      "match": "(?:(?://)(?:.*))"
+    },
+    "block_comment": {
+      "name": "comment.block.flat",
+      "begin": "(?:(?:/\\*))",
+      "end": "(?:(?:\\*/))"
+    },
     "module_declaration": {
       "name": "meta.declaration.module.flat",
-      "match": "(?:((?:module))(?:(?:\\s*))((?:(?:[a-zA-Z_][a-zA-Z0-9_]*))(?:(?:(?:\\.)(?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))*)))",
+      "match": "(?:((?:module))(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)((?:(?:[a-zA-Z_][a-zA-Z0-9_]*))(?:(?:(?:\\.)(?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))*)))",
       "captures": {
         "1": {
           "name": "storage.type.module.flat"
@@ -30,7 +52,7 @@
     },
     "struct_declaration": {
       "name": "meta.declaration.struct.flat",
-      "begin": "(?:((?:struct))(?:(?:\\s*))((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))(?:(?:\\s*))(?:(?:((?:(?:<)(?:(?:\\s*))(?:(?:(?:(?:\\s*))(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))(?:(?:(?:(?:\\s*))(?:,)(?:(?:\\s*))(?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))*))?)(?:(?:\\s*))(?:>))))?)(?:(?:\\s*))(?:\\{))",
+      "begin": "(?:((?:struct))(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:((?:(?:<)(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))(?:(?:(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:,)(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))*))?)(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:>))))?)(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:\\{))",
       "beginCaptures": {
         "1": {
           "name": "storage.type.struct.flat"
@@ -43,6 +65,9 @@
             {
               "name": "entity.name.type.flat",
               "match": "((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))"
+            },
+            {
+              "include": "#comment"
             }
           ]
         }
@@ -64,16 +89,22 @@
                 }
               ],
               "end": "(?=(?:(?:(?:,)|(?:\\}))))"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?=(?:(?:(?:,)|(?:\\}))))"
+        },
+        {
+          "include": "#comment"
         }
       ],
       "end": "(?:(?:\\}))"
     },
     "constraint_declaration": {
       "name": "meta.declaration.constraint.flat",
-      "begin": "(?:((?:constraint))(?:(?:\\s*))((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))(?:(?:\\s*))(?:(?:((?:(?:<)(?:(?:\\s*))(?:(?:(?:(?:\\s*))(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))(?:(?:(?:(?:\\s*))(?:,)(?:(?:\\s*))(?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))*))?)(?:(?:\\s*))(?:>))))?)(?:(?:\\s*))(?:\\{))",
+      "begin": "(?:((?:constraint))(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:((?:(?:<)(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))(?:(?:(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:,)(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))*))?)(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:>))))?)(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:\\{))",
       "beginCaptures": {
         "1": {
           "name": "storage.type.constraint.flat"
@@ -86,6 +117,9 @@
             {
               "name": "entity.name.type.flat",
               "match": "((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))"
+            },
+            {
+              "include": "#comment"
             }
           ]
         }
@@ -114,9 +148,15 @@
                   "patterns": [
                     {
                       "include": "#type"
+                    },
+                    {
+                      "include": "#comment"
                     }
                   ],
                   "end": "(?=(?:(?:(?:,)|(?:\\)))))"
+                },
+                {
+                  "include": "#comment"
                 }
               ],
               "end": "(?:(?:\\)))"
@@ -127,6 +167,9 @@
                 {
                   "name": "entity.name.function.flat",
                   "match": "(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))"
+                },
+                {
+                  "include": "#comment"
                 }
               ]
             },
@@ -136,12 +179,21 @@
               "patterns": [
                 {
                   "include": "#type"
+                },
+                {
+                  "include": "#comment"
                 }
               ],
               "end": "(?=(?:(?:(?:,)|(?:\\}))))"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?=(?:(?:(?:,)|(?:\\}))))"
+        },
+        {
+          "include": "#comment"
         }
       ],
       "end": "(?:(?:\\}))"
@@ -162,6 +214,9 @@
             {
               "name": "entity.name.type.flat",
               "match": "((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?:(?:>))"
@@ -171,7 +226,7 @@
           "begin": "(?:(?:\\[))",
           "patterns": [
             {
-              "begin": "(?:((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))(?:(?:\\s*))(?:<))",
+              "begin": "(?:((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:<))",
               "beginCaptures": {
                 "1": {
                   "name": "entity.name.type.constraint.flat"
@@ -183,9 +238,15 @@
                 },
                 {
                   "match": "(?:(?:,))"
+                },
+                {
+                  "include": "#comment"
                 }
               ],
               "end": "(?:(?:>))"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?:(?:\\]))"
@@ -207,9 +268,15 @@
                 },
                 {
                   "include": "#type"
+                },
+                {
+                  "include": "#comment"
                 }
               ],
               "end": "(?:(?:,)|(?=(?:(?:\\)))))"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?:(?:\\)))"
@@ -220,6 +287,9 @@
           "patterns": [
             {
               "include": "#block_statement"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<=(?:(?:\\})))"
@@ -234,9 +304,15 @@
           "patterns": [
             {
               "include": "#type"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?=(?:(?:\\{)))"
+        },
+        {
+          "include": "#comment"
         }
       ],
       "end": "(?<=(?:(?:\\})))"
@@ -258,15 +334,21 @@
             },
             {
               "match": "(?:(?:,))"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?:(?:>))"
         },
         {
           "match": "(?:(?:(?:(?:\\*)|(?:\\[\\])))+)"
+        },
+        {
+          "include": "#comment"
         }
       ],
-      "end": "(?!(?:(?:(?:\\s*))(?:(?:<)|(?:\\*)|(?:\\[\\]))))"
+      "end": "(?!(?:(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:<)|(?:\\*)|(?:\\[\\]))))"
     },
     "statement": {
       "patterns": [
@@ -287,6 +369,9 @@
         },
         {
           "include": "#expression_statement"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -296,6 +381,9 @@
       "patterns": [
         {
           "include": "#statement"
+        },
+        {
+          "include": "#comment"
         }
       ],
       "end": "(?:(?:\\}))"
@@ -310,7 +398,7 @@
       },
       "patterns": [
         {
-          "begin": "(?:((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))(?:(?:\\s*))(?:=))",
+          "begin": "(?:((?:(?:[a-zA-Z_][a-zA-Z0-9_]*)))(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:=))",
           "beginCaptures": {
             "1": {
               "name": "variable.other.flat"
@@ -319,12 +407,18 @@
           "patterns": [
             {
               "include": "#expression"
+            },
+            {
+              "include": "#comment"
             }
           ],
-          "end": "(?<!(?:(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))(?:(?:\\s*))(?:=)))"
+          "end": "(?<!(?:(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:=)))"
+        },
+        {
+          "include": "#comment"
         }
       ],
-      "end": "(?!(?:(?:(?:\\s*))(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))(?:(?:\\s*))(?:=)))"
+      "end": "(?!(?:(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:=)))"
     },
     "return_statement": {
       "name": "meta.statement.return.flat",
@@ -337,6 +431,9 @@
       "patterns": [
         {
           "include": "#expression"
+        },
+        {
+          "include": "#comment"
         }
       ],
       "end": "(?<!(?:(?:return)))"
@@ -355,6 +452,9 @@
           "patterns": [
             {
               "include": "#expression"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?:(?:\\)))"
@@ -364,12 +464,18 @@
           "patterns": [
             {
               "include": "#statement"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:else)))"
         },
         {
           "include": "#statement"
+        },
+        {
+          "include": "#comment"
         }
       ],
       "end": "(?:(?<!(?:(?:(?:if)|(?:\\)))))(?!(?:(?:(?:\\()|(?:else)))))"
@@ -388,12 +494,18 @@
           "patterns": [
             {
               "include": "#expression"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?:(?:\\)))"
         },
         {
           "include": "#statement"
+        },
+        {
+          "include": "#comment"
         }
       ],
       "end": "(?:(?<!(?:(?:(?:while)|(?:\\))))))"
@@ -402,6 +514,9 @@
       "patterns": [
         {
           "include": "#expression"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -409,6 +524,9 @@
       "patterns": [
         {
           "include": "#L10"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -421,6 +539,9 @@
           "patterns": [
             {
               "include": "#expression"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?:(?:\\)))"
@@ -465,6 +586,9 @@
               "patterns": [
                 {
                   "include": "#type"
+                },
+                {
+                  "include": "#comment"
                 }
               ],
               "end": "(?:(?:>))"
@@ -486,18 +610,33 @@
                       "patterns": [
                         {
                           "include": "#expression"
+                        },
+                        {
+                          "include": "#comment"
                         }
                       ],
                       "end": "(?=(?:(?:(?:,)|(?:\\}))))"
+                    },
+                    {
+                      "include": "#comment"
                     }
                   ],
                   "end": "(?=(?:(?:(?:,)|(?:\\}))))"
+                },
+                {
+                  "include": "#comment"
                 }
               ],
               "end": "(?:(?:\\}))"
+            },
+            {
+              "include": "#comment"
             }
           ],
-          "end": "(?!(?:(?:(?:\\s*))(?:(?:<)|(?:\\{))))"
+          "end": "(?!(?:(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:<)|(?:\\{))))"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -521,6 +660,9 @@
             },
             {
               "match": "(?:(?:,))"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?:(?:\\)))",
@@ -544,6 +686,9 @@
             },
             {
               "match": "(?:(?:,))"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?:(?:\\]))",
@@ -565,9 +710,15 @@
             {
               "name": "variable.other.flat",
               "match": "(?:(?:[a-zA-Z_][a-zA-Z0-9_]*))"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:\\.)))"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -585,6 +736,9 @@
           "patterns": [
             {
               "include": "#L2"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:\\+)))"
@@ -600,6 +754,9 @@
           "patterns": [
             {
               "include": "#L2"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:-)))"
@@ -615,6 +772,9 @@
           "patterns": [
             {
               "include": "#L2"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:!)))"
@@ -630,12 +790,18 @@
           "patterns": [
             {
               "include": "#L2"
+            },
+            {
+              "include": "#comment"
             }
           ],
-          "end": "(?!(?:(?:(?:\\s*))(?:~)))"
+          "end": "(?!(?:(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:~)))"
         },
         {
           "include": "#L1"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -656,6 +822,9 @@
           "patterns": [
             {
               "include": "#L2"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:\\*)))"
@@ -671,6 +840,9 @@
           "patterns": [
             {
               "include": "#L2"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:/)))"
@@ -686,9 +858,15 @@
           "patterns": [
             {
               "include": "#L2"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:%)))"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -709,6 +887,9 @@
           "patterns": [
             {
               "include": "#L3"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:\\+)))"
@@ -724,9 +905,15 @@
           "patterns": [
             {
               "include": "#L3"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:-)))"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -747,6 +934,9 @@
           "patterns": [
             {
               "include": "#L4"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:<<)))"
@@ -762,9 +952,15 @@
           "patterns": [
             {
               "include": "#L4"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:>>)))"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -785,6 +981,9 @@
           "patterns": [
             {
               "include": "#L5"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:&)))"
@@ -800,6 +999,9 @@
           "patterns": [
             {
               "include": "#L5"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:\\|)))"
@@ -815,9 +1017,15 @@
           "patterns": [
             {
               "include": "#L5"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:\\^)))"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -838,6 +1046,9 @@
           "patterns": [
             {
               "include": "#L6"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:==)))"
@@ -853,6 +1064,9 @@
           "patterns": [
             {
               "include": "#L6"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:!=)))"
@@ -868,6 +1082,9 @@
           "patterns": [
             {
               "include": "#L6"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:<)))"
@@ -883,6 +1100,9 @@
           "patterns": [
             {
               "include": "#L6"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:>)))"
@@ -898,6 +1118,9 @@
           "patterns": [
             {
               "include": "#L6"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:<=)))"
@@ -913,9 +1136,15 @@
           "patterns": [
             {
               "include": "#L6"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:>=)))"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -936,9 +1165,15 @@
           "patterns": [
             {
               "include": "#L7"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:&&)))"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -959,9 +1194,15 @@
           "patterns": [
             {
               "include": "#L8"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:\\|\\|)))"
+        },
+        {
+          "include": "#comment"
         }
       ]
     },
@@ -982,9 +1223,15 @@
           "patterns": [
             {
               "include": "#L10"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "(?<!(?:(?:=)))"
+        },
+        {
+          "include": "#comment"
         }
       ]
     }
