@@ -179,8 +179,11 @@ const syntax: TmLanguage = {
 
     function_declaration: {
       name: "meta.declaration.function.flat",
-      begin: Capture("fn"),
-      beginCaptures: { 1: { name: "storage.type.function.flat" } },
+      begin: All(Capture("fn"), WS, Capture(Identifier)),
+      beginCaptures: {
+        1: { name: "storage.type.function.flat" },
+        2: { name: "entity.name.function.flat" },
+      },
 
       patterns: [
         {
@@ -236,17 +239,25 @@ const syntax: TmLanguage = {
           patterns: [{ include: "#block_statement" }, { include: "#comment" }],
           end: Lookbehind("}"),
         },
-        { name: "entity.name.function.flat", match: Identifier },
         {
           name: "meta.declaration.function.result.flat",
-          begin: All(":"),
-          patterns: [{ include: "#type" }, { include: "#comment" }],
-          end: Lookahead("{"),
+          begin: All(":", WS),
+          patterns: [{ include: "#type" }],
+          end: NegativeLookbehind(":", WS),
         },
         { include: "#comment" },
       ],
 
-      end: Lookbehind("}"),
+      end: Any(
+        Lookbehind("}"),
+        All(
+          NegativeLookahead(WS, "<"),
+          NegativeLookahead(WS, "["),
+          NegativeLookahead(WS, "("),
+          NegativeLookahead(WS, "{"),
+          NegativeLookahead(WS, ":")
+        )
+      ),
     },
 
     type: {
