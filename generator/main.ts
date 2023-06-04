@@ -91,7 +91,6 @@ const syntax: TmLanguage = {
 
     constraint_declaration: {
       name: "meta.declaration.constraint.flat",
-
       begin: All(
         Capture("constraint"),
         WS,
@@ -101,7 +100,6 @@ const syntax: TmLanguage = {
         WS,
         "{"
       ),
-
       beginCaptures: {
         1: { name: "storage.type.constraint.flat" },
         2: { name: "entity.name.type.constraint.flat" },
@@ -111,7 +109,48 @@ const syntax: TmLanguage = {
           ],
         },
       },
-
+      patterns: [
+        {
+          name: "meta.declaration.constraint.condition.flat",
+          begin: All("fn"),
+          beginCaptures: {
+            0: { name: "storage.type.function.flat" },
+          },
+          patterns: [
+            {
+              name: "meta.declaration.constraint.condition.parameters.flat",
+              begin: All("("),
+              patterns: [
+                {
+                  begin: Identifier,
+                  beginCaptures: {
+                    0: { name: "variable.parameter.flat" },
+                  },
+                  patterns: [{ include: "#type" }],
+                  end: Lookahead(Any(",", ")")),
+                },
+              ],
+              end: All(")"),
+            },
+            {
+              name: "meta.declaration.constraint.condition.name.flat",
+              patterns: [
+                {
+                  name: "entity.name.function.flat",
+                  match: Identifier,
+                },
+              ],
+            },
+            {
+              name: "meta.declaration.constraint.condition.result.flat",
+              begin: All(":"),
+              patterns: [{ include: "#type" }],
+              end: Lookahead(Any(",", "}")),
+            },
+          ],
+          end: Lookahead(Any(",", "}")),
+        },
+      ],
       end: All("}"),
     },
 
