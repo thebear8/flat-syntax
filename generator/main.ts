@@ -1,3 +1,5 @@
+import type { TmLanguage } from "./tmLanguage.types";
+
 type Fragment = string | RegExp | (() => string) | (() => RegExp);
 
 function Escape(v: Fragment): string {
@@ -40,7 +42,7 @@ const TypeParamList = All(
   ">"
 );
 
-const syntax = {
+const syntax: TmLanguage = {
   name: "flat",
   patterns: [
     { include: "#module_declaration" },
