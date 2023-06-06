@@ -469,6 +469,11 @@
         },
         {
           "begin": "(?:(?:else))",
+          "beginCaptures": {
+            "0": {
+              "name": "keyword.control.else.flat"
+            }
+          },
           "patterns": [
             {
               "include": "#statement"
@@ -486,7 +491,7 @@
           "include": "#comment"
         }
       ],
-      "end": "(?:(?<!(?:(?:(?:if)|(?:\\)))))(?!(?:(?:(?:\\()|(?:else)))))"
+      "end": "(?:(?<!(?:(?:(?:if)|(?:\\)))(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)))(?!(?:(?:(?:(?:(?:\\s)|(?:(?:/\\*)(?:.*)(?:\\*/))))*)(?:(?:\\()|(?:else)))))"
     },
     "while_statement": {
       "name": "meta.statement.while.flat",

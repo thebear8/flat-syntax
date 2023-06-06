@@ -335,6 +335,7 @@ const syntax: TmLanguage = {
         },
         {
           begin: All("else"),
+          beginCaptures: { 0: { name: "keyword.control.else.flat" } },
           patterns: [{ include: "#statement" }, { include: "#comment" }],
           end: NegativeLookbehind("else"),
         },
@@ -342,8 +343,8 @@ const syntax: TmLanguage = {
         { include: "#comment" },
       ],
       end: All(
-        NegativeLookbehind(Any("if", ")")),
-        NegativeLookahead(Any("(", "else"))
+        NegativeLookbehind(Any("if", ")"), WS),
+        NegativeLookahead(WS, Any("(", "else"))
       ),
     },
 
